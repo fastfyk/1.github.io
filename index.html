@@ -675,11 +675,10 @@
     <div class="success-overlay" id="successOverlay">
         <div class="success-modal">
             <i class="fas fa-check-circle"></i>
-            <h3>تم ارسال رسالتك بنجاح</h3>
-            <p>سوف نراجع طلبك وسنرد عليك قريبا بحل شامل</p>
+            <h3>تم إرسال الطلب إلى منصة محمود للخدمات التقنية سوف نراجع طلبكم قريبا وسنعود إليكم بالحل</h3>
             <div class="modal-options" id="modalOptions">
-                <button class="modal-btn btn-another" id="btnAnother">إرسال رسالة أخرى</button>
-                <button class="modal-btn btn-top" id="btnTop">الذهاب إلى أعلى الموقع</button>
+                <button class="modal-btn btn-another" id="btnAnother">هل تريد إرسال رسالة طلب أخري؟</button>
+                <button class="modal-btn btn-top" id="btnTop">هل تريد الرجوع إلي أعلي المنصة؟</button>
             </div>
         </div>
     </div>
@@ -709,10 +708,55 @@
                 nextInput.value = window.location.href.split('?')[0] + '?success=true';
             }
 
-            // فحص ما إذا عاد المستخدم من إرسال ناجح لإظهار نافذة النجاح
+            // تشغيل نغمة جيتار جميلة لمدة 4 ثوانٍ باستخدام Web Audio API
+            function playGuitarMelody() {
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    // نوتات مقطوعة جيتار (تتابع ترددي هادئ وجميل)
+                    const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 261.63]; 
+                    let startTime = audioCtx.currentTime;
+                    
+                    notes.forEach((freq, index) => {
+                        const osc = audioCtx.createOscillator();
+                        const gainNode = audioCtx.createGain();
+                        
+                        // استخدام موجة مثلثية أو سينية لمحاكاة نعومة الجيتار
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, startTime + (index * 0.5));
+                        
+                        // تأثير تلاشي الصوت (Envelope)
+                        gainNode.gain.setValueAtTime(0, startTime + (index * 0.5));
+                        gainNode.gain.linearRampToValueAtTime(0.3, startTime + (index * 0.5) + 0.05);
+                        gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + (index * 0.5) + 0.5);
+                        
+                        osc.connect(gainNode);
+                        gainNode.connect(audioCtx.destination);
+                        
+                        osc.start(startTime + (index * 0.5));
+                        osc.stop(startTime + (index * 0.5) + 0.5);
+                    });
+                } catch(e) {
+                    console.log('Audio context not supported or blocked.');
+                }
+            }
+
+            // فحص ما إذا عاد المستخدم من إرسال ناجح لإظهار رسالة النجاح والخيارات وتوقيت الـ 4 ثواني
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('success') === 'true') {
-                document.getElementById('successOverlay').classList.add('show');
+                const overlay = document.getElementById('successOverlay');
+                const options = document.getElementById('modalOptions');
+                
+                // إخفاء الأزرار مؤقتاً أثناء عرض رسالة التأكيد وحدها لمدة 4 ثواني
+                options.style.display = 'none';
+                overlay.classList.add('show');
+                
+                // إصدار نغمة الجيتار
+                playGuitarMelody();
+
+                // بعد 4 ثوانٍ تماماً، يتم إظهار أزرار النافلتين للاختيار
+                setTimeout(() => {
+                    options.style.display = 'flex';
+                }, 4000);
             }
 
             // 1. إدارة الوضع المظلم / الليلي / الدكان
