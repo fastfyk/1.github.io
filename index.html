@@ -1,0 +1,905 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محمود للخدمات - حلول برمجية وتقنية متكاملة</title>
+    <!-- خط Tajawal من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- مكتبة أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* متغيرات الألوان للوضع الفاتح */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent-color: #10b981;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        /* متغيرات الألوان للوضع المظلم أو الدكان */
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* شريط الملاحة Header */
+        .navbar {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 75px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            color: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* زر الوضع المظلم */
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* القسم الرئيسي (Hero) */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+        }
+
+        .badge {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: #ffffff;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1eb956;
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* قسم الخدمات */
+        .services {
+            padding: 90px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            padding: 35px 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: var(--primary-color);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* قسم من نحن */
+        .about {
+            padding: 80px 0;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text h2 span {
+            color: var(--primary-color);
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .features-list li i {
+            color: var(--accent-color);
+        }
+
+        /* قسم نموذج التواصل والطلبات (Contact Form) */
+        .contact-section {
+            padding: 90px 0;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .form-group label i {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* الفوتر */
+        .footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 30px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* تنسيقات نافذة رسالة النجاح والوميض وتأثير الألوان */
+        @keyframes colorGlow {
+            0% { border-color: #2563eb; box-shadow: 0 0 15px rgba(37, 99, 235, 0.6); }
+            33% { border-color: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.8); }
+            66% { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+            100% { border-color: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.6); }
+        }
+
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-modal {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            padding: 35px 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            border: 4px solid #2563eb;
+            animation: colorGlow 2s infinite alternate;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .success-modal i {
+            font-size: 3rem;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+
+        .success-modal h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .success-modal p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn-another {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-another:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-top {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-top:hover {
+            background-color: var(--border-color);
+        }
+
+        /* الاستجابة للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 75px);
+                background-color: var(--bg-card);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transition);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط الملاحة Top Navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-microchip logo-icon"></i>
+                <span>محمود</span> للخدمات
+            </a>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="#hero" class="active">الرئيسية</a>
+                <a href="#services">خدماتنا</a>
+                <a href="#about">عن المكتب</a>
+                <a href="#contact">طلب خدمة / تواصل</a>
+            </nav>
+
+            <div class="nav-controls">
+                <!-- زر الوضع المظلم -->
+                <button id="themeToggle" class="theme-btn" aria-label="تغيير الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- زر القائمة للجوال -->
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- الواجهة الرئيسية (Hero Section) -->
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <span class="badge">الخيارات التقنية الأفضل والآمنة</span>
+            <h1>مكتب <span>محمود للخدمات</span> التقنية والبرمجية</h1>
+            <p>نقدم أفضل الحلول الاحترافية في صيانة وبرمجة الهواتف، استرجاع وتأمين الحسابات، تطوير المواقع والتطبيقات، التصميم والمونتاج بأعلى جودة وسرعة.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> اطلب خدمتك الآن
+                </a>
+                <a href="https://wa.me/249000000000" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الخدمات (Services Section) -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>خدماتنا المتميزة</h2>
+                <p>نلبي جميع احتياجاتك التقنية والإبداعية بأمانة وسرعة احترافية</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>فرمتة وصيانة الهواتف</h3>
+                    <p>فرمتة احترافية وحل مشاكل البطء والتعليق وإزالة الحمايات وإعادة ضبط المصنع بأمان.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-user-shield"></i></div>
+                    <h3>تأمين حسابات الفيسبوك</h3>
+                    <p>حماية حسابك من الاختراق والتحقق بخطوتين وتأمين البيانات الحساسة ضد البلاغات والسرقة.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fab fa-facebook"></i></div>
+                    <h3>فتح واسترجاع حسابات الفيسبوك</h3>
+                    <p>حل مشاكل الحسابات المعطلة، المنسية، والمقفلة بسبب التأكيد أو الانتهاك وإرجاعها بأمان.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
+                    <h3>فتح وإنشاء حسابات الإيميل</h3>
+                    <p>إنشاء واسترجاع حسابات Gmail، Outlook، وYahoo وتأمينها برقم الهاتف ووسائل الاسترداد.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-university"></i></div>
+                    <h3>فتح وتفعيل حسابات بنكك</h3>
+                    <p>المساعدة في إنشاء وتنفيذ إجراءات وتفعيل حسابات تطبيقات المصارف ومعالجة أخطاء التسجيل.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-code"></i></div>
+                    <h3>برمجة تطبيقات الهواتف</h3>
+                    <p>تصميم وتطوير تطبيقات أجهزة المحمول الحديثة بأحدث التقنيات وواجهات مستخدم جذابة ومستقرة.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fab fa-android"></i></div>
+                    <h3>برمجة تطبيقات الأندرويد</h3>
+                    <p>تطوير تطبيقات متكاملة لنظام Android وتجهيزها للنشر والعمل بأعلى أداء وتجاوب.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
+                    <h3>برمجة المواقع الإلكترونية</h3>
+                    <p>تصميم وتطوير مواقع إلكترونية عصرية، متجاوبة مع كافة الشاشات، وسريعة الأداء بأحدث الممارسات.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-server"></i></div>
+                    <h3>إستضافة المواقع الإلكترونية</h3>
+                    <p>توفير واستضافة سريعة وآمنة للمواقع الإلكترونية مع ضمان الاستقرار والدعم الفني.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-sync-alt"></i></div>
+                    <h3>تحويل المواقع الإلكترونية إلى تطبيقات</h3>
+                    <p>تحويل موقعك الإلكتروني إلى تطبيق أندرويد احترافي وسريع يعمل بسلاسة على الهواتف.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-paint-brush"></i></div>
+                    <h3>تصميم إعلانات ومقاطع فيديو ومونتاج</h3>
+                    <p>تصميم إعلانات تجارية احترافية، مونتاج وتعديل مقاطع الفيديو بجودة عالية تناسب منصات التواصل.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="icon-box"><i class="fas fa-print"></i></div>
+                    <h3>طباعة وتصوير مستندات</h3>
+                    <p>خدمات تصوير المستندات، الطباعة الاحترافية، وتجهيز الملفات والأوراق الرسمية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم من نحن (About Section) -->
+    <section id="about" class="about">
+        <div class="container about-container">
+            <div class="about-text">
+                <h2>لماذا تختار <span>محمود للخدمات</span>؟</h2>
+                <p>نمتلك خبرة واسعة في التعامل مع مختلف المشاكل التقنية للهواتف والشبكات والحسابات الشخصية، بالإضافة لتطوير واستضافة المواقع والتطبيقات والخدمات الإبداعية والتصميم. نضمن لك السرية التامة والسرعة في الإنجاز.</p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> سرية تامة وأمان عالي لبيانات والحسابات.</li>
+                    <li><i class="fas fa-check-circle"></i> استجابة سريعة وتنفيذ دقيق للطلبات.</li>
+                    <li><i class="fas fa-check-circle"></i> تنوع واسع في الخدمات التقنية والرقمية.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم طلبات الموقع وتواصل FormSubmit -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>نموذج طلب خدمة ومراسلة</h2>
+                <p>املأ النموذج أدناه بالبيانات المطلوبة وسيصلنا طلبك فوراً على البريد الإلكتروني</p>
+            </div>
+
+            <!-- نموذج FormSubmit -->
+            <form id="contactForm" action="https://formsubmit.co/ajax/alshftmhmwd9@gmail.com" method="POST" enctype="multipart/form-data" class="contact-form">
+                
+                <!-- إعدادات إضافية لـ FormSubmit -->
+                <input type="hidden" name="_subject" value="طلب خدمة جديد عبر موقع محمود للخدمات">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> اسمك الكريم:</label>
+                    <input type="text" id="name" name="الاسم" placeholder="أدخل اسمك الكامل هنا..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceSelect"><i class="fas fa-list-alt"></i> اختر طلب الخدمة:</label>
+                    <select id="serviceSelect" name="الخدمة_المطلوبة" required>
+                        <option value="" disabled selected>-- اضغط لاختيار الخدمة --</option>
+                        <option value="فرمتة وصيانة الهواتف">فرمتة وصيانة الهواتف</option>
+                        <option value="تأمين حسابات الفيسبوك">تأمين حسابات الفيسبوك</option>
+                        <option value="فتح واسترجاع حسابات الفيسبوك">فتح واسترجاع حسابات الفيسبوك</option>
+                        <option value="فتح وإنشاء حسابات الإيميل">فتح وإنشاء حسابات الإيميل</option>
+                        <option value="فتح وتفعيل حسابات بنكك">فتح وتفعيل حسابات بنكك</option>
+                        <option value="برمجة تطبيقات الهواتف">برمجة تطبيقات الهواتف</option>
+                        <option value="برمجة تطبيقات الأندرويد">برمجة تطبيقات الأندرويد</option>
+                        <option value="برمجة المواقع الإلكترونية">برمجة المواقع الإلكترونية</option>
+                        <option value="إستضافة المواقع الإلكترونية">إستضافة المواقع الإلكترونية</option>
+                        <option value="تحويل المواقع الإلكترونية إلى تطبيقات">تحويل المواقع الإلكترونية إلى تطبيقات</option>
+                        <option value="تصميم إعلانات ومقاطع فيديو ومونتاج">تصميم إعلانات ومقاطع فيديو ومونتاج</option>
+                        <option value="طباعة وتصوير مستندات">طباعة وتصوير مستندات</option>
+                        <option value="طلب خدمة أخرى">طلب خدمة أخرى</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment-dots"></i> تفاصيل أو كتابة رسالتك:</label>
+                    <textarea id="message" name="الرسالة_أو_التفاصيل" rows="5" placeholder="اكتب تفاصيل مشكلتك أو طلبك هنا..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="attachment"><i class="fas fa-file-upload"></i> إرفاق صورة المشكلة (أو التقاطها) / ملف PDF:</label>
+                    <input type="file" id="attachment" name="الملف_المرفق" accept="image/*,application/pdf" capture="environment">
+                    <small class="form-hint">يمكنك اختيار ملف PDF، رفع صورة من جهازك، أو التقاط صورة مباشرة عبر الكاميرا من هاتفك.</small>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn btn-primary btn-large btn-submit">
+                    <i class="fas fa-paper-plane"></i> إرسال الطلب الآن
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- نافذة منبثقة لرسالة النجاح والخيارات -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-modal">
+            <i class="fas fa-check-circle"></i>
+            <h3>تم ارسال رسالتك بنجاح</h3>
+            <p>سوف نراجع طلبك وسنرد عليك قريبا بحل شامل</p>
+            <div class="modal-options" id="modalOptions" style="display: none;">
+                <button class="modal-btn btn-another" id="btnAnother">إرسال رسالة أخرى</button>
+                <button class="modal-btn btn-top" id="btnTop">الذهاب إلى أعلى الموقع</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر (Footer) -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 جميع الحقوق محفوظة لـ <strong>محمود للخدمات</strong></p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/249000000000" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            // 1. إدارة الوضع المظلم / الليلي / الدكان
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            });
+
+            // 2. قائمة الهاتف المتحركة (Mobile Menu)
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = hamburger.querySelector('i');
+                
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+
+            // إغلاق القائمة عند النقر على الروابط
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const icon = hamburger.querySelector('i');
+                    if (icon) {
+                        icon.classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            });
+
+            // 3. معالجة الإرسال عبر FormSubmit بالـ AJAX وعرض رسالة النجاح والخيارات
+            const contactForm = document.getElementById('contactForm');
+            const successOverlay = document.getElementById('successOverlay');
+            const modalOptions = document.getElementById('modalOptions');
+            const btnAnother = document.getElementById('btnAnother');
+            const btnTop = document.getElementById('btnTop');
+            const submitBtn = document.getElementById('submitBtn');
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(contactForm);
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    // إظهار الرسالة وتفعيل الوميض الملون
+                    successOverlay.classList.add('show');
+                    modalOptions.style.display = 'none';
+
+                    // إخفاء الرسالة ومنع الخروج بعد 5 ثوانٍ وإظهار الخيارين
+                    setTimeout(() => {
+                        modalOptions.style.display = 'flex';
+                    }, 5000);
+
+                    contactForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب الآن';
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب الآن';
+                });
+            });
+
+            // خيار إرسال رسالة أخرى (التحويل لقائمة إرسال طلب جديد)
+            btnAnother.addEventListener('click', () => {
+                successOverlay.classList.remove('show');
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // خيار الذهاب إلى أعلى الموقع
+            btnTop.addEventListener('click', () => {
+                successOverlay.classList.remove('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
